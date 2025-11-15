@@ -1,5 +1,6 @@
 'use client';
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export const dynamic = 'force-dynamic';
 export default function AboutPage() {
     return (_jsxs("div", { className: "max-w-4xl mx-auto px-4 py-8", children: [_jsx("h1", { className: "text-3xl md:text-4xl font-bold mb-8 text-gray-900", children: "V\u1EC1 LawBot" }), _jsxs("div", { className: "prose prose-lg max-w-none", children: [_jsx("p", { className: "text-gray-600 mb-4", children: "LawBot l\u00E0 h\u1EC7 th\u1ED1ng t\u01B0 v\u1EA5n ph\u00E1p lu\u1EADt th\u00F4ng minh \u0111\u01B0\u1EE3c ph\u00E1t tri\u1EC3n b\u1EDFi AI, gi\u00FAp ng\u01B0\u1EDDi d\u00F9ng ti\u1EBFp c\u1EADn th\u00F4ng tin ph\u00E1p lu\u1EADt m\u1ED9t c\u00E1ch d\u1EC5 d\u00E0ng v\u00E0 nhanh ch\u00F3ng." }), _jsx("p", { className: "text-gray-600 mb-4", children: "Ch\u00FAng t\u00F4i cung c\u1EA5p d\u1ECBch v\u1EE5 t\u01B0 v\u1EA5n ph\u00E1p lu\u1EADt 24/7 v\u1EDBi \u0111\u1ED9 ch\u00EDnh x\u00E1c cao, d\u1EF1a tr\u00EAn c\u01A1 s\u1EDF d\u1EEF li\u1EC7u v\u0103n b\u1EA3n ph\u00E1p lu\u1EADt Vi\u1EC7t Nam \u0111\u01B0\u1EE3c c\u1EADp nh\u1EADt li\u00EAn t\u1EE5c." })] })] }));
 }

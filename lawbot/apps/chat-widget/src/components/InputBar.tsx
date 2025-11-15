@@ -37,8 +37,8 @@ export function InputBar({ onSend, disabled }: InputBarProps) {
   };
 
   return (
-    <div class="border-t p-3 bg-white">
-      <div class="flex items-end gap-2">
+    <div className="border-t p-3 bg-white">
+      <div className="flex items-end gap-2">
         <textarea
           ref={textareaRef}
           value={input}
@@ -46,26 +46,26 @@ export function InputBar({ onSend, disabled }: InputBarProps) {
           onKeyDown={handleKeyDown}
           placeholder="Nhập câu hỏi của bạn..."
           disabled={disabled}
-          class="flex-1 min-h-[40px] max-h-[120px] px-3 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className="flex-1 min-h-[40px] max-h-[120px] px-3 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
           rows={1}
         />
 
         <button
           onClick={handleSend}
           disabled={!input.trim() || disabled}
-          class="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex-shrink-0"
+          className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex-shrink-0"
           aria-label="Gửi tin nhắn"
         >
           <svg
-            class="w-5 h-5"
+            className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
             />
           </svg>
@@ -73,7 +73,7 @@ export function InputBar({ onSend, disabled }: InputBarProps) {
       </div>
 
       {/* Quick Replies */}
-      <div class="mt-2 flex flex-wrap gap-2">
+      <div className="mt-2 flex flex-wrap gap-2">
         {[
           'Hợp đồng lao động',
           'Quyền lợi người tiêu dùng',
@@ -86,7 +86,7 @@ export function InputBar({ onSend, disabled }: InputBarProps) {
               onSend(suggestion);
             }}
             disabled={disabled}
-            class="text-xs px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-xs px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {suggestion}
           </button>

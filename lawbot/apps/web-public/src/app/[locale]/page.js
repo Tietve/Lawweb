@@ -2,6 +2,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useTranslations } from 'next-intl';
 import { Scale, Briefcase, Building2 } from 'lucide-react';
+export const dynamic = 'force-dynamic';
 export default function HomePage() {
     const t = useTranslations('home');
     const features = [

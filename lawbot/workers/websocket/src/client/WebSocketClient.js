@@ -1,6 +1,9 @@
 /**
  * WebSocket Client with Auto-reconnect
  * Handles connection management, heartbeat, and message queuing
+ *
+ * NOTE: This is a browser-only client. For Node.js/Workers, use alternative WebSocket libraries.
+ * The browser WebSocket API is used here.
  */
 export class WebSocketClient {
     ws = null;

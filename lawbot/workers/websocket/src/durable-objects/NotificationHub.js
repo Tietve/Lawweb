@@ -6,10 +6,8 @@
 export class NotificationHub {
     state;
     sessions;
-    env;
-    constructor(state, env) {
+    constructor(state, _env) {
         this.state = state;
-        this.env = env;
         this.sessions = new Map();
         // Restore sessions from storage on initialization
         this.state.blockConcurrencyWhile(async () => {
@@ -44,8 +42,8 @@ export class NotificationHub {
             return new Response('Missing userId parameter', { status: 400 });
         }
         // Create WebSocket pair
-        const webSocketPair = new WebSocketPair();
-        const [client, server] = Object.values(webSocketPair);
+        const pair = new WebSocketPair();
+        const [client, server] = [pair[0], pair[1]];
         // Accept WebSocket with hibernation
         this.state.acceptWebSocket(server);
         // Store session data

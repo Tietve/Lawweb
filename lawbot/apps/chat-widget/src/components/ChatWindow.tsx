@@ -24,16 +24,16 @@ export function ChatWindow({
   }, [messages, isTyping]);
 
   return (
-    <div class="flex-1 flex flex-col min-h-0">
+    <div className="flex-1 flex flex-col min-h-0">
       {/* Messages */}
-      <div class="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 && (
-          <div class="text-center text-gray-500 mt-8">
-            <div class="text-4xl mb-2">👋</div>
-            <div class="text-lg font-semibold mb-1">
+          <div className="text-center text-gray-500 mt-8">
+            <div className="text-4xl mb-2">👋</div>
+            <div className="text-lg font-semibold mb-1">
               Chào mừng đến với LawBot
             </div>
-            <div class="text-sm">
+            <div className="text-sm">
               Hỏi tôi bất kỳ câu hỏi pháp lý nào
             </div>
           </div>
@@ -58,16 +58,16 @@ function MessageBubble({ message }: { message: Message }) {
   const isUser = message.role === 'user';
 
   return (
-    <div class={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
       <div
-        class={`max-w-[80%] ${
+        className={`max-w-[80%] ${
           isUser
             ? 'bg-blue-600 text-white'
             : 'bg-gray-100 text-gray-900'
         } rounded-lg p-3`}
       >
         {/* Message Content */}
-        <div class="whitespace-pre-wrap break-words">{message.content}</div>
+        <div className="whitespace-pre-wrap break-words">{message.content}</div>
 
         {/* Citations */}
         {message.citations && message.citations.length > 0 && (
@@ -76,7 +76,7 @@ function MessageBubble({ message }: { message: Message }) {
 
         {/* Timestamp */}
         <div
-          class={`text-xs mt-1 ${
+          className={`text-xs mt-1 ${
             isUser ? 'text-blue-100' : 'text-gray-500'
           }`}
         >
@@ -89,16 +89,16 @@ function MessageBubble({ message }: { message: Message }) {
 
 function TypingIndicator() {
   return (
-    <div class="flex justify-start">
-      <div class="bg-gray-100 rounded-lg p-3">
-        <div class="flex items-center gap-1">
-          <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
+    <div className="flex justify-start">
+      <div className="bg-gray-100 rounded-lg p-3">
+        <div className="flex items-center gap-1">
+          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
           <div
-            class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+            className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
             style={{ animationDelay: '0.1s' }}
           />
           <div
-            class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+            className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
             style={{ animationDelay: '0.2s' }}
           />
         </div>

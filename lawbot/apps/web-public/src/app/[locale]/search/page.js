@@ -3,6 +3,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Search, FileText, Filter, X } from 'lucide-react';
+export const dynamic = 'force-dynamic';
 export default function SearchPage() {
     const t = useTranslations('search');
     const [query, setQuery] = useState('');

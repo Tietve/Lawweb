@@ -146,11 +146,14 @@ export async function sendFormattedResponse(
 
   // Send message chunks
   for (let i = 0; i < chunks.length; i++) {
-    await client.sendTextMessage(recipientId, chunks[i]);
+    const chunk = chunks[i];
+    if (chunk) {
+      await client.sendTextMessage(recipientId, chunk);
 
-    // Add delay between messages to avoid rate limits
-    if (i < chunks.length - 1) {
-      await sleep(500);
+      // Add delay between messages to avoid rate limits
+      if (i < chunks.length - 1) {
+        await sleep(500);
+      }
     }
   }
 

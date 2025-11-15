@@ -14,11 +14,14 @@ export class ZaloClient {
   private tokenExpiry: number = 0;
 
   constructor(
-    private _appId: string,
-    private _secretKey: string,
-    private _oaId: string,
+    _appId: string,
+    _secretKey: string,
+    _oaId: string,
     private kv?: KVNamespace
-  ) {}
+  ) {
+    // Store for future OAuth implementation
+    // Currently unused - access token managed via KV
+  }
 
   /**
    * Send text message to user

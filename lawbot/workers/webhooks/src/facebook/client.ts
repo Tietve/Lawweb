@@ -5,6 +5,14 @@
 
 import type { MessagePayload, QuickReply, UserProfile } from './types';
 
+interface FacebookError {
+  error?: {
+    message?: string;
+    type?: string;
+    code?: number;
+  };
+}
+
 export class MessengerClient {
   private baseUrl = 'https://graph.facebook.com/v21.0';
   private pageAccessToken: string;
@@ -34,7 +42,7 @@ export class MessengerClient {
     });
 
     if (!response.ok) {
-      const error = await response.json();
+      const error = (await response.json()) as FacebookError;
       throw new Error(
         `FB API error: ${error.error?.message || 'Unknown error'}`
       );
@@ -125,7 +133,7 @@ export class MessengerClient {
     const response = await fetch(url);
 
     if (!response.ok) {
-      const error = await response.json();
+      const error = (await response.json()) as FacebookError;
       throw new Error(
         `Failed to get user profile: ${error.error?.message || 'Unknown error'}`
       );
@@ -168,7 +176,7 @@ export class MessengerClient {
     });
 
     if (!response.ok) {
-      const error = await response.json();
+      const error = (await response.json()) as FacebookError;
       throw new Error(
         `Failed to set messenger profile: ${error.error?.message || 'Unknown error'}`
       );
@@ -190,7 +198,7 @@ export class MessengerClient {
     });
 
     if (!response.ok) {
-      const error = await response.json();
+      const error = (await response.json()) as FacebookError;
       throw new Error(
         `Failed to delete messenger profile: ${error.error?.message || 'Unknown error'}`
       );

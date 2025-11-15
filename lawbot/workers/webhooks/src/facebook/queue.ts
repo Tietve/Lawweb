@@ -4,7 +4,7 @@
  */
 
 import { MessengerClient } from './client';
-import { handleMessage, handlePostback, handleQuickReply } from './handlers';
+import { handleMessage, handlePostback } from './handlers';
 import type { MessengerWebhookEntry, MessagingEvent, Env } from './types';
 
 /**

@@ -133,6 +133,10 @@ async function handleAttachments(
 ): Promise<void> {
   const attachment = attachments[0];
 
+  if (!attachment) {
+    return;
+  }
+
   if (attachment.type === 'image' && attachment.payload.url) {
     await client.sendTextMessage(
       senderId,

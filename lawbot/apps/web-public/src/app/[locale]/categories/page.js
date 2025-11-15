@@ -3,6 +3,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { FileText, ChevronRight } from 'lucide-react';
+export const dynamic = 'force-dynamic';
 export default function CategoriesPage() {
     const t = useTranslations('categories');
     const [categories, setCategories] = useState([]);
