@@ -9,7 +9,7 @@ binding = "DB"
 database_name = "lawbot-db"
 database_id = "${D1_DATABASE_ID}"
 
-# Vectorize binding for search
+# Vectorize binding for semantic search
 [[vectorize]]
 binding = "VECTORIZE"
 index_name = "legal-docs-index"
@@ -24,7 +24,18 @@ bucket_name = "lawbot-uploads"
 binding = "RATE_LIMIT"
 id = "${KV_RATE_LIMIT_NAMESPACE_ID}"
 
-# Service bindings
+# Queue for webhook processing
+[[queues.producers]]
+binding = "WEBHOOK_QUEUE"
+queue = "lawbot-webhooks"
+
+# Durable Object for real-time analytics
+[[durable_objects.bindings]]
+name = "ANALYTICS"
+class_name = "AnalyticsCounter"
+script_name = "lawbot-analytics"
+
+# Service binding to chatbot worker
 [[services]]
 binding = "CHATBOT"
 service = "lawbot-chatbot"
@@ -32,10 +43,15 @@ service = "lawbot-chatbot"
 # Environment variables
 [vars]
 ENVIRONMENT = "development"
-JWT_SECRET = "${JWT_SECRET}"
-CLAUDE_API_KEY = "${CLAUDE_API_KEY}"
 CORS_ORIGIN = "http://localhost:3000"
 
-# Rate limiting
+# Secrets (set via wrangler secret put)
+# JWT_SECRET - JWT signing secret
+# CLAUDE_API_KEY - Anthropic Claude API key
+# ZALO_APP_SECRET - Zalo OA app secret
+# FB_APP_SECRET - Facebook app secret
+# FB_VERIFY_TOKEN - Facebook webhook verify token
+
+# Performance limits
 [limits]
 cpu_ms = 50

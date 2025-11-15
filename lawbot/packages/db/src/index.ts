@@ -1,19 +1,18 @@
 /**
  * @lawbot/db
- * Database schemas and utilities
+ * Database schemas and utilities for LawBot
  */
-
-import { z } from 'zod';
 
 export const version = '0.1.0';
 
-// Database schema exports will be added in Phase 02
-// Example schema:
-export const UserSchema = z.object({
-  id: z.string(),
-  email: z.string().email(),
-  name: z.string(),
-  createdAt: z.string(),
-});
+// Export D1 client
+export { D1Client } from './client';
 
-export type User = z.infer<typeof UserSchema>;
+// Export migration runner
+export { MigrationRunner, migrate } from './migrate';
+
+// Export all schemas and types
+export * from './schemas';
+
+// Export query helpers
+export * from './helpers/queries';
