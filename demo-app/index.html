@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo App - Playwright Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .result p {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .counter {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .counter-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .counter-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .counter-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #667eea;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .counter-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎭 Demo App</h1>
+        <p class="subtitle">Playwright MCP Test Application</p>
+
+        <!-- Login Form -->
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="email">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password">
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-primary" id="loginBtn">Login</button>
+            <button class="btn-secondary" id="clearBtn">Clear</button>
+        </div>
+
+        <!-- Result Display -->
+        <div class="result" id="result">
+            <h3>✅ Login Successful!</h3>
+            <p id="resultText"></p>
+        </div>
+
+        <!-- Counter -->
+        <div class="counter">
+            <p style="color: #666; font-size: 14px; margin-bottom: 5px;">Click Counter</p>
+            <div class="counter-value" id="counterValue">0</div>
+            <div class="counter-buttons">
+                <button class="counter-btn" id="decrementBtn">−</button>
+                <button class="counter-btn" id="incrementBtn">+</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Login functionality
+        const loginBtn = document.getElementById('loginBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const result = document.getElementById('result');
+        const resultText = document.getElementById('resultText');
+
+        loginBtn.addEventListener('click', () => {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (!email || !password) {
+                alert('Please fill in both email and password!');
+                return;
+            }
+
+            // Simulate login
+            result.classList.add('show');
+            resultText.innerHTML = `
+                <strong>Email:</strong> ${email}<br>
+                <strong>Password:</strong> ${'•'.repeat(password.length)}<br>
+                <strong>Time:</strong> ${new Date().toLocaleTimeString()}
+            `;
+
+            // Add success class to button
+            loginBtn.textContent = '✓ Logged In';
+            loginBtn.style.background = '#4CAF50';
+
+            setTimeout(() => {
+                loginBtn.textContent = 'Login';
+                loginBtn.style.background = '';
+            }, 2000);
+        });
+
+        clearBtn.addEventListener('click', () => {
+            emailInput.value = '';
+            passwordInput.value = '';
+            result.classList.remove('show');
+        });
+
+        // Counter functionality
+        let counter = 0;
+        const counterValue = document.getElementById('counterValue');
+        const incrementBtn = document.getElementById('incrementBtn');
+        const decrementBtn = document.getElementById('decrementBtn');
+
+        incrementBtn.addEventListener('click', () => {
+            counter++;
+            counterValue.textContent = counter;
+            counterValue.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                counterValue.style.transform = 'scale(1)';
+            }, 200);
+        });
+
+        decrementBtn.addEventListener('click', () => {
+            counter--;
+            counterValue.textContent = counter;
+            counterValue.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                counterValue.style.transform = 'scale(1)';
+            }, 200);
+        });
+
+        // Enter key to submit
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                loginBtn.click();
+            }
+        });
+
+        // Log page load for Playwright testing
+        console.log('🎭 Demo App loaded successfully!');
+        console.log('Ready for Playwright MCP testing');
+
+        // Expose test helpers to window
+        window.demoApp = {
+            getCounter: () => counter,
+            setCounter: (val) => {
+                counter = val;
+                counterValue.textContent = counter;
+            },
+            isLoggedIn: () => result.classList.contains('show'),
+            getLoginInfo: () => ({
+                email: emailInput.value,
+                password: passwordInput.value
+            })
+        };
+    </script>
+</body>
+</html>

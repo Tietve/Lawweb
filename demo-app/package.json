@@ -1,0 +1,14 @@
+{
+  "name": "demo-app-playwright-test",
+  "version": "1.0.0",
+  "description": "Demo app for Playwright MCP testing",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5173 --host",
+    "build": "vite build",
+    "preview": "vite preview --port 5173"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
