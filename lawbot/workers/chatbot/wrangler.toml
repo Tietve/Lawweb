@@ -1,0 +1,39 @@
+name = "lawbot-chatbot"
+main = "src/index.ts"
+compatibility_date = "2025-11-15"
+workers_dev = true
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "lawbot-db"
+database_id = "${D1_DATABASE_ID}"
+
+# Vectorize binding for RAG
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "legal-docs-index"
+
+# R2 Storage for documents
+[[r2_buckets]]
+binding = "ASSETS"
+bucket_name = "lawbot-assets"
+
+# KV for session management
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "${KV_NAMESPACE_ID}"
+
+# Durable Objects for real-time chat
+[[durable_objects.bindings]]
+name = "CHAT_ROOM"
+class_name = "ChatRoom"
+
+# Environment variables
+[vars]
+ENVIRONMENT = "development"
+CLAUDE_API_KEY = "${CLAUDE_API_KEY}"
+
+# Rate limiting
+[limits]
+cpu_ms = 50

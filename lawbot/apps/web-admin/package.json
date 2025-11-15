@@ -1,0 +1,20 @@
+{
+  "name": "@lawbot/web-admin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Admin dashboard for LawBot",
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'Web admin development - Phase 08'",
+    "build": "echo 'Web admin build - Phase 08'",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@lawbot/ui": "*",
+    "@lawbot/shared": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2"
+  }
+}

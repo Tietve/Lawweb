@@ -1,0 +1,32 @@
+name = "lawbot-webhooks"
+main = "src/index.ts"
+compatibility_date = "2025-11-15"
+workers_dev = true
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "lawbot-db"
+database_id = "${D1_DATABASE_ID}"
+
+# KV for webhook verification
+[[kv_namespaces]]
+binding = "WEBHOOK_CACHE"
+id = "${KV_WEBHOOK_NAMESPACE_ID}"
+
+# Service bindings to chatbot worker
+[[services]]
+binding = "CHATBOT"
+service = "lawbot-chatbot"
+
+# Environment variables
+[vars]
+ENVIRONMENT = "development"
+ZALO_APP_ID = "${ZALO_APP_ID}"
+ZALO_APP_SECRET = "${ZALO_APP_SECRET}"
+MESSENGER_VERIFY_TOKEN = "${MESSENGER_VERIFY_TOKEN}"
+MESSENGER_PAGE_ACCESS_TOKEN = "${MESSENGER_PAGE_ACCESS_TOKEN}"
+
+# Rate limiting
+[limits]
+cpu_ms = 50

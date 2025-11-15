@@ -1,0 +1,26 @@
+{
+  "name": "@lawbot/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "API application for LawBot",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@lawbot/ai": "*",
+    "@lawbot/db": "*",
+    "@lawbot/shared": "*",
+    "@hono/zod-validator": "^0.4.1",
+    "hono": "^4.6.14",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.91.0"
+  }
+}

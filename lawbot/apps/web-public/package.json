@@ -1,0 +1,20 @@
+{
+  "name": "@lawbot/web-public",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Public website for LawBot",
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'Web public development - Phase 06'",
+    "build": "echo 'Web public build - Phase 06'",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@lawbot/ui": "*",
+    "@lawbot/shared": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2"
+  }
+}

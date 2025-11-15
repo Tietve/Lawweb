@@ -1,0 +1,19 @@
+{
+  "name": "@lawbot/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared utilities and types for LawBot",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2"
+  }
+}

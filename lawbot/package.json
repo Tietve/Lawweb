@@ -1,0 +1,50 @@
+{
+  "name": "lawbot-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LawBot - AI-powered legal assistant system on Cloudflare Workers",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "workers/*"
+  ],
+  "scripts": {
+    "dev": "wrangler dev",
+    "dev:chatbot": "wrangler dev --config workers/chatbot/wrangler.toml",
+    "dev:webhooks": "wrangler dev --config workers/webhooks/wrangler.toml",
+    "dev:scheduler": "wrangler dev --config workers/scheduler/wrangler.toml",
+    "dev:api": "wrangler dev --config apps/api/wrangler.toml",
+    "deploy": "npm run deploy:workers && npm run deploy:apps",
+    "deploy:workers": "npm run deploy:chatbot && npm run deploy:webhooks && npm run deploy:scheduler",
+    "deploy:chatbot": "wrangler deploy --config workers/chatbot/wrangler.toml",
+    "deploy:webhooks": "wrangler deploy --config workers/webhooks/wrangler.toml",
+    "deploy:scheduler": "wrangler deploy --config workers/scheduler/wrangler.toml",
+    "deploy:apps": "npm run deploy:api",
+    "deploy:api": "wrangler deploy --config apps/api/wrangler.toml",
+    "build": "tsc --build",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "@types/node": "^22.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
+    "eslint": "^9.15.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.5",
+    "wrangler": "^3.91.0"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.4.1",
+    "hono": "^4.6.14",
+    "zod": "^3.23.8"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
