@@ -3,18 +3,34 @@
   "version": "0.1.0",
   "private": true,
   "description": "Admin dashboard for LawBot",
-  "type": "module",
   "scripts": {
-    "dev": "echo 'Web admin development - Phase 08'",
-    "build": "echo 'Web admin build - Phase 08'",
-    "type-check": "tsc --noEmit"
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc --noEmit",
+    "pages:build": "npx @cloudflare/next-on-pages"
   },
   "dependencies": {
     "@lawbot/ui": "*",
-    "@lawbot/shared": "*"
+    "@lawbot/shared": "*",
+    "next": "^14.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "chart.js": "^4.4.0",
+    "react-chartjs-2": "^5.2.0",
+    "date-fns": "^3.0.0",
+    "clsx": "^2.1.0",
+    "lucide-react": "^0.344.0",
+    "tailwind-merge": "^2.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",
-    "typescript": "^5.7.2"
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@cloudflare/next-on-pages": "^1.13.0",
+    "typescript": "^5.7.2",
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0"
   }
 }

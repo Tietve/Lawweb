@@ -1,0 +1,46 @@
+name = "lawbot-websocket"
+main = "src/index.ts"
+compatibility_date = "2025-11-15"
+workers_dev = true
+
+# Durable Objects bindings
+[[durable_objects.bindings]]
+name = "NOTIFICATION_HUB"
+class_name = "NotificationHub"
+script_name = "lawbot-websocket"
+
+[[durable_objects.bindings]]
+name = "ANALYTICS_AGGREGATOR"
+class_name = "AnalyticsAggregator"
+script_name = "lawbot-websocket"
+
+[[durable_objects.bindings]]
+name = "PRESENCE_TRACKER"
+class_name = "PresenceTracker"
+script_name = "lawbot-websocket"
+
+[[durable_objects.bindings]]
+name = "CHAT_ORCHESTRATOR"
+class_name = "ChatOrchestrator"
+script_name = "lawbot-websocket"
+
+# D1 Database binding (optional - for analytics)
+[[d1_databases]]
+binding = "DB"
+database_name = "lawbot-db"
+database_id = "${D1_DATABASE_ID}"
+
+# Durable Objects migrations
+[[migrations]]
+tag = "v1"
+new_classes = ["NotificationHub", "AnalyticsAggregator", "PresenceTracker", "ChatOrchestrator"]
+
+# Environment variables
+[vars]
+ENVIRONMENT = "development"
+
+# Resource limits
+[limits]
+cpu_ms = 50
+
+# WebSocket hibernation enabled by default in compatibility_date >= 2023-07-24

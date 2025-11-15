@@ -19,13 +19,28 @@ id = "${KV_WEBHOOK_NAMESPACE_ID}"
 binding = "CHATBOT"
 service = "lawbot-chatbot"
 
+# Queue for Facebook webhook processing
+[[queues.producers]]
+binding = "FB_QUEUE"
+queue = "facebook-webhooks-queue"
+
+[[queues.consumers]]
+queue = "facebook-webhooks-queue"
+max_batch_size = 10
+max_batch_timeout = 5
+max_retries = 3
+dead_letter_queue = "facebook-webhooks-dlq"
+
 # Environment variables
 [vars]
 ENVIRONMENT = "development"
 ZALO_APP_ID = "${ZALO_APP_ID}"
 ZALO_APP_SECRET = "${ZALO_APP_SECRET}"
+ZALO_OA_ID = "${ZALO_OA_ID}"
+ZALO_SYNTAX_FILTER = "false"
 MESSENGER_VERIFY_TOKEN = "${MESSENGER_VERIFY_TOKEN}"
 MESSENGER_PAGE_ACCESS_TOKEN = "${MESSENGER_PAGE_ACCESS_TOKEN}"
+MESSENGER_APP_SECRET = "${MESSENGER_APP_SECRET}"
 
 # Rate limiting
 [limits]

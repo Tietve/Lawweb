@@ -1,0 +1,56 @@
+{
+  "common": {
+    "appName": "LawBot",
+    "tagline": "Tư Vấn Pháp Luật AI"
+  },
+  "nav": {
+    "home": "Trang Chủ",
+    "categories": "Danh Mục",
+    "search": "Tìm Kiếm",
+    "news": "Tin Tức",
+    "contact": "Liên Hệ"
+  },
+  "home": {
+    "hero": {
+      "title": "Tư Vấn Pháp Luật AI",
+      "subtitle": "Giải đáp thắc mắc pháp lý 24/7 với AI được đào tạo từ luật Việt Nam",
+      "ctaPrimary": "Bắt Đầu Chat",
+      "ctaSecondary": "Tìm Hiểu Thêm"
+    },
+    "features": {
+      "title": "Lĩnh Vực Pháp Luật",
+      "civilLaw": {
+        "title": "Luật Dân Sự",
+        "description": "Tư vấn hợp đồng, tranh chấp, thừa kế"
+      },
+      "laborLaw": {
+        "title": "Luật Lao Động",
+        "description": "Quyền lợi người lao động, hợp đồng lao động"
+      },
+      "businessLaw": {
+        "title": "Luật Doanh Nghiệp",
+        "description": "Thành lập công ty, thuế, giấy phép"
+      }
+    }
+  },
+  "categories": {
+    "title": "Danh Mục Pháp Luật",
+    "documents": "Văn bản pháp luật",
+    "loading": "Đang tải...",
+    "noResults": "Không tìm thấy kết quả"
+  },
+  "search": {
+    "placeholder": "Tìm kiếm văn bản pháp luật...",
+    "button": "Tìm kiếm",
+    "results": "Kết quả tìm kiếm",
+    "loading": "Đang tìm kiếm...",
+    "noResults": "Không tìm thấy kết quả"
+  },
+  "footer": {
+    "about": "Về chúng tôi",
+    "contact": "Liên hệ",
+    "terms": "Điều khoản sử dụng",
+    "privacy": "Chính sách bảo mật",
+    "copyright": "© 2025 LawBot. Tất cả quyền được bảo lưu."
+  }
+}

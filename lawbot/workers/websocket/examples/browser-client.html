@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LawBot WebSocket Client Example</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .status {
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    .status.connected { background: #d4edda; color: #155724; }
+    .status.disconnected { background: #f8d7da; color: #721c24; }
+    .status.connecting { background: #fff3cd; color: #856404; }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    button:hover { background: #0056b3; }
+    button:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+    }
+    #messages {
+      max-height: 400px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 4px;
+      margin-top: 20px;
+      background: #f8f9fa;
+    }
+    .message {
+      padding: 8px;
+      margin: 4px 0;
+      border-radius: 4px;
+      background: white;
+      border-left: 3px solid #007bff;
+    }
+    .message.error { border-left-color: #dc3545; }
+    .message.success { border-left-color: #28a745; }
+    input {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>LawBot WebSocket Client</h1>
+
+    <div id="status" class="status disconnected">Disconnected</div>
+
+    <div>
+      <label>User ID: <input type="text" id="userId" value="admin-123" /></label>
+      <label>Worker URL: <input type="text" id="workerUrl" value="ws://localhost:8787" style="width: 300px;" /></label>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <button id="connectBtn" onclick="connect()">Connect</button>
+      <button id="disconnectBtn" onclick="disconnect()" disabled>Disconnect</button>
+      <button onclick="sendTestNotification()">Send Test Notification</button>
+    </div>
+
+    <div id="messages"></div>
+  </div>
+
+  <script>
+    let ws = null;
+    let reconnectAttempts = 0;
+    const maxReconnectAttempts = 5;
+
+    function updateStatus(state, text) {
+      const statusEl = document.getElementById('status');
+      statusEl.className = `status ${state}`;
+      statusEl.textContent = text;
+    }
+
+    function addMessage(text, type = 'info') {
+      const messagesEl = document.getElementById('messages');
+      const msgEl = document.createElement('div');
+      msgEl.className = `message ${type}`;
+      msgEl.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
+      messagesEl.appendChild(msgEl);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function connect() {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        addMessage('Already connected', 'error');
+        return;
+      }
+
+      const userId = document.getElementById('userId').value;
+      const workerUrl = document.getElementById('workerUrl').value;
+      const url = `${workerUrl}/ws/notifications?userId=${userId}`;
+
+      updateStatus('connecting', 'Connecting...');
+      addMessage(`Connecting to ${url}`);
+
+      try {
+        ws = new WebSocket(url);
+
+        ws.onopen = () => {
+          updateStatus('connected', 'Connected');
+          addMessage('WebSocket connected', 'success');
+          reconnectAttempts = 0;
+
+          document.getElementById('connectBtn').disabled = true;
+          document.getElementById('disconnectBtn').disabled = false;
+
+          // Start heartbeat
+          startHeartbeat();
+        };
+
+        ws.onmessage = (event) => {
+          try {
+            const message = JSON.parse(event.data);
+            addMessage(`Received: ${JSON.stringify(message, null, 2)}`);
+
+            // Handle different message types
+            switch (message.type) {
+              case 'connected':
+                addMessage(`Connected as user: ${message.userId}`, 'success');
+                break;
+              case 'chat_assigned':
+                addMessage(`New chat assigned: ${JSON.stringify(message.data)}`, 'success');
+                break;
+              case 'escalation':
+                addMessage(`Chat escalated: ${JSON.stringify(message.data)}`, 'success');
+                break;
+              case 'presence_update':
+                addMessage(`Presence update: ${JSON.stringify(message.data)}`);
+                break;
+            }
+          } catch (error) {
+            addMessage(`Parse error: ${error.message}`, 'error');
+          }
+        };
+
+        ws.onerror = (error) => {
+          addMessage(`WebSocket error: ${error}`, 'error');
+        };
+
+        ws.onclose = (event) => {
+          updateStatus('disconnected', 'Disconnected');
+          addMessage(`Connection closed: ${event.code} - ${event.reason}`);
+
+          document.getElementById('connectBtn').disabled = false;
+          document.getElementById('disconnectBtn').disabled = true;
+
+          stopHeartbeat();
+
+          // Auto-reconnect if not normal closure
+          if (event.code !== 1000 && reconnectAttempts < maxReconnectAttempts) {
+            scheduleReconnect();
+          }
+        };
+      } catch (error) {
+        updateStatus('disconnected', 'Connection failed');
+        addMessage(`Connection error: ${error.message}`, 'error');
+      }
+    }
+
+    function disconnect() {
+      if (ws) {
+        ws.close(1000, 'User initiated disconnect');
+        ws = null;
+      }
+    }
+
+    let heartbeatInterval = null;
+
+    function startHeartbeat() {
+      heartbeatInterval = setInterval(() => {
+        if (ws && ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({
+            type: 'ping',
+            timestamp: new Date().toISOString(),
+          }));
+        }
+      }, 30000); // 30 seconds
+    }
+
+    function stopHeartbeat() {
+      if (heartbeatInterval) {
+        clearInterval(heartbeatInterval);
+        heartbeatInterval = null;
+      }
+    }
+
+    function scheduleReconnect() {
+      reconnectAttempts++;
+      const delay = 1000 * Math.pow(2, reconnectAttempts - 1);
+
+      updateStatus('connecting', `Reconnecting in ${delay/1000}s... (${reconnectAttempts}/${maxReconnectAttempts})`);
+      addMessage(`Reconnecting in ${delay/1000}s (attempt ${reconnectAttempts})`);
+
+      setTimeout(() => {
+        connect();
+      }, delay);
+    }
+
+    async function sendTestNotification() {
+      const workerUrl = document.getElementById('workerUrl').value.replace('ws://', 'http://').replace('wss://', 'https://');
+
+      try {
+        const response = await fetch(`${workerUrl}/api/notifications/broadcast`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'system_alert',
+            data: { message: 'Test notification from browser client' },
+            timestamp: new Date().toISOString(),
+          }),
+        });
+
+        const result = await response.json();
+        addMessage(`Notification sent: ${JSON.stringify(result)}`, 'success');
+      } catch (error) {
+        addMessage(`Failed to send notification: ${error.message}`, 'error');
+      }
+    }
+
+    // Auto-connect on load
+    window.addEventListener('load', () => {
+      // Optionally auto-connect
+      // connect();
+    });
+  </script>
+</body>
+</html>

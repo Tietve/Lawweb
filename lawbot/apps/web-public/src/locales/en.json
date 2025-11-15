@@ -1,0 +1,56 @@
+{
+  "common": {
+    "appName": "LawBot",
+    "tagline": "AI Legal Consultation"
+  },
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "search": "Search",
+    "news": "News",
+    "contact": "Contact"
+  },
+  "home": {
+    "hero": {
+      "title": "AI Legal Consultation",
+      "subtitle": "24/7 Legal Q&A Support with AI trained on Vietnamese law",
+      "ctaPrimary": "Start Chat",
+      "ctaSecondary": "Learn More"
+    },
+    "features": {
+      "title": "Legal Areas",
+      "civilLaw": {
+        "title": "Civil Law",
+        "description": "Contract consultation, disputes, inheritance"
+      },
+      "laborLaw": {
+        "title": "Labor Law",
+        "description": "Employee rights, labor contracts"
+      },
+      "businessLaw": {
+        "title": "Business Law",
+        "description": "Company formation, taxes, licenses"
+      }
+    }
+  },
+  "categories": {
+    "title": "Legal Categories",
+    "documents": "Legal documents",
+    "loading": "Loading...",
+    "noResults": "No results found"
+  },
+  "search": {
+    "placeholder": "Search legal documents...",
+    "button": "Search",
+    "results": "Search results",
+    "loading": "Searching...",
+    "noResults": "No results found"
+  },
+  "footer": {
+    "about": "About us",
+    "contact": "Contact",
+    "terms": "Terms of service",
+    "privacy": "Privacy policy",
+    "copyright": "© 2025 LawBot. All rights reserved."
+  }
+}

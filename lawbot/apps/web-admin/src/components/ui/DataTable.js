@@ -1,0 +1,5 @@
+'use client';
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export default function DataTable({ columns, data, onRowClick }) {
+    return (_jsxs("div", { className: "overflow-x-auto", children: [_jsxs("table", { className: "w-full", children: [_jsx("thead", { className: "bg-gray-50 border-b border-gray-200", children: _jsx("tr", { children: columns.map(column => (_jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider", children: column.label }, column.key))) }) }), _jsx("tbody", { className: "bg-white divide-y divide-gray-200", children: data.map((row, index) => (_jsx("tr", { onClick: () => onRowClick?.(row), className: onRowClick ? 'cursor-pointer hover:bg-gray-50' : '', children: columns.map(column => (_jsx("td", { className: "px-6 py-4 whitespace-nowrap text-sm text-gray-900", children: column.render ? column.render(row[column.key], row) : row[column.key] }, column.key))) }, index))) })] }), data.length === 0 && (_jsx("div", { className: "text-center py-12 text-gray-500", children: "Kh\u00F4ng c\u00F3 d\u1EEF li\u1EC7u" }))] }));
+}

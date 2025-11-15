@@ -1,0 +1,21 @@
+{
+  "name": "@lawbot/websocket",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WebSocket worker with Durable Objects for real-time features",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.6.14"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.91.0"
+  }
+}

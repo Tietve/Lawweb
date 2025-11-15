@@ -1,0 +1,22 @@
+{
+  "name": "@lawbot/chat-widget",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "preact": "^10.19.3"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.8.1",
+    "@types/node": "^22.10.1",
+    "terser": "^5.44.1",
+    "typescript": "^5.7.2",
+    "vite": "^5.0.11"
+  }
+}
